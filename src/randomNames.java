@@ -9,15 +9,12 @@ public class randomNames {
 			"Tunahan", "Barbaros", "Bilal", "Enes", "Selçuk", 
 			"Þule", "Tuðçe","Hadise", "Gözde", "Esra", "Tuðba"};
 	
-	String[] soyIsimler = new String[] {"Atik", "Emircan", "Yetiþ","Bursalý",
+	String[] soyIsimler = new String[] {"Atik", "Emircan", "Ýpekçi","Bursalý",
 			"Kaya", "Yýlmaz", "Yýldýz", "Düzyatan", "Ersoy", "Yerlikaya",
-			"Sarý","Damla","Ulusay","Türker","Üstün","Yüksel","Uður",
-			"Ateþ","Diþsiz","Kýlýç"};
+			"Sarý","Þansal","Ulusay","Türker","Üstün","Yüksel","Uður",
+			"Ateþ","Düzoba","Kýlýç"};
 	
 	String[] karistirilmisIsimleString = new String[400];
-	
-	Random rnd = new Random();
-
 	
 	public randomNames() {
 		Collections.shuffle(Arrays.asList(isimler));
@@ -40,5 +37,4 @@ public class randomNames {
 		}
 		return isimler;
 	}
-
 }
