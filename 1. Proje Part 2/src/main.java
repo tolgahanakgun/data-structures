@@ -5,7 +5,7 @@ public class main {
 		// TODO Auto-generated method stub
 		int i=0;
 		randomNames rnmsNames = new randomNames();
-		for (String str: rnmsNames.isimleriOku(40)) System.out.println(++i+". "+str);
+		for (String str: rnmsNames.isimleriOku(90)) System.out.println(++i+". "+str);
 	}
 
 }
