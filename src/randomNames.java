@@ -1,6 +1,9 @@
+import java.util.Arrays;
+import java.util.Collections;
 import java.util.Random;
 
 public class randomNames {
+	
 	String[] isimler = new String[] {"Mehmet", "Yunus","Aybars","Nagihan", 
 			"Merve", "Gülcan", "Cemal", "Serkan", "Berk", 
 			"Tunahan", "Barbaros", "Bilal", "Enes", "Selçuk", 
@@ -11,37 +14,31 @@ public class randomNames {
 			"Sarý","Damla","Ulusay","Türker","Üstün","Yüksel","Uður",
 			"Ateþ","Diþsiz","Kýlýç"};
 	
-	int[] isimSiralamalar = {0,1,2,3,4,5,6,7,8,9,10,
-									11,12,13,14,15,16,17,18,19};
+	String[] karistirilmisIsimleString = new String[400];
 	
-	int[] soyIsimSiralamalar = {0,1,2,3,4,5,6,7,8,9,10,
-									11,12,13,14,15,16,17,18,19};
 	Random rnd = new Random();
+
 	
 	public randomNames() {
-		shuffleArray(isimSiralamalar);
-		shuffleArray(soyIsimSiralamalar);
+		Collections.shuffle(Arrays.asList(isimler));
+		Collections.shuffle(Arrays.asList(soyIsimler));
+		isimleriBirlestir();
 	}
 	
-	public String[] isimleriOku() {
-		String[] karistirilmisIsimleString = new String[400];
+	private void isimleriBirlestir() {
 		for(int i = 0; i<20; i++){
 			for(int j=0; j<20; j++)
-			karistirilmisIsimleString[20*i+j] = isimler[isimSiralamalar[j]] + " " + soyIsimler[soyIsimSiralamalar[i]];
-			//System.out.println(karistirilmisIsimleString[i]);
+			karistirilmisIsimleString[20*i+j] = isimler[j] + " " + soyIsimler[i];
 		}
-		return karistirilmisIsimleString;
+	}
+	
+	public String[] isimleriOku(int n){
+		String[] isimler = new String[n];
+		Collections.shuffle(Arrays.asList(karistirilmisIsimleString));
+		for(int i=0; i<n;i++){
+			isimler[i]=karistirilmisIsimleString[i];
+		}
+		return isimler;
 	}
 
-	  void shuffleArray(int[] ar)
-	  {
-	    for (int i = ar.length - 1; i > 0; i--)
-	    {
-	      int index = rnd.nextInt(i + 1);
-	      // Simple swap
-	      int a = ar[index];
-	      ar[index] = ar[i];
-	      ar[i] = a;
-	    }
-	  }
 }
