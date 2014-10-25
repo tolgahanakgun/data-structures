@@ -16,8 +16,8 @@ public class randomNames {
 	String[] karistirilmisIsimleString = new String[400];
 	
 	public randomNames() {
-		Collections.shuffle(Arrays.asList(isimler));
-		Collections.shuffle(Arrays.asList(soyIsimler));
+		Collections.shuffle(Arrays.asList(isimler)); //isimlerin sýralamasý deðiþtiriliyor
+		Collections.shuffle(Arrays.asList(soyIsimler)); //soyisimlerin sýralamasý deðiþtiriliyor
 		isimleriBirlestir();
 	}
 	
@@ -30,7 +30,7 @@ public class randomNames {
 	
 	public String[] isimleriOku(int n){
 		String[] isimler = new String[n];
-		Collections.shuffle(Arrays.asList(karistirilmisIsimleString));
+		Collections.shuffle(Arrays.asList(karistirilmisIsimleString)); //isim soyisim kombinasyonlarý karýþtýrýlýyor
 		for(int i=0; i<n;i++){
 			isimler[i]=karistirilmisIsimleString[i];
 		}

@@ -1,5 +1,3 @@
-import masalar.*;
-
 public class anaProgram {
 
 	public static void main(String[] args) {
