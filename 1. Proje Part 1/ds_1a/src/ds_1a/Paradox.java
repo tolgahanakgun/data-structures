@@ -165,7 +165,7 @@ public class Paradox {
 			case 1:
 				System.out.print((i+1)+". ");
 				if((i+1+kucukYil)%4==0)
-					for(int j=0;i<29;j++){
+					for(int j=0;j<29;j++){
 						System.out.print(cakisma[i][j] + " ");
 					}
 				else
