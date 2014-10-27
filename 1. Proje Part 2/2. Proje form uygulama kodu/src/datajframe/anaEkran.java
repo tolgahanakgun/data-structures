@@ -19,8 +19,11 @@ import org.eclipse.wb.swt.SWTResourceManager;
 public class anaEkran {
 
 	protected static Shell shell;
-	private static ArrayList<Text> txtKisler = new ArrayList<Text>();
+	 //masada oturacaklar listesine indexlemeyle eriþebilmek icin arraylist yaratýldý
+	private static ArrayList<Text> txtKisler = new ArrayList<Text>(); 
+	//masalarýn doluluk yüzzdesi belirlenirken ilerleme çubuklarýna indexlemeyle eriþebilme için yaratýldý
 	private static ArrayList<ProgressBar> pbarList = new ArrayList<ProgressBar>();
+	//masalarýn doluluk yüzzdesi ve oturan kiþileri belirlerken indexlemeyle ulaþabilmek için yaratýldý
 	private static ArrayList<Label> lblList = new ArrayList<Label>();
 
 	/**
@@ -40,23 +43,22 @@ public class anaEkran {
 	public void open() {
 		Display display = Display.getDefault();
 		shell = new Shell(SWT.CLOSE | SWT.MIN | SWT.TITLE);
+		shell.setImage(SWTResourceManager.getImage(anaEkran.class, "/com/sun/java/swing/plaf/motif/icons/DesktopIcon.gif"));
 		shell.setTouchEnabled(true);
 		shell.setSize(999, 718);
-		shell.setText("SWT Application");
+		shell.setText("Rezervasyon Sistemi");
 		createContents();
 		shell.open();
 		shell.layout();
 		
-		
-		    while (!shell.isDisposed()) {
-		      if (!display.readAndDispatch())
-		        display.sleep();
-		    }
-		    display.dispose();
+	    while (!shell.isDisposed()) {
+	      if (!display.readAndDispatch())
+	        display.sleep();
+	      }
+	    display.dispose();
 	}
 
 	private static void createContents() {
-		// TODO Auto-generated method stub
 		
 		ProgressBar barMasa1 = new ProgressBar(shell, SWT.NONE);
 		barMasa1.setBounds(173, 27, 801, 17);
@@ -91,6 +93,7 @@ public class anaEkran {
 		
 		ProgressBar barRestoran = new ProgressBar(shell, SWT.NONE);
 		barRestoran.setBounds(173, 590, 801, 17);
+		
 		pbarList.add(barMasa1);
 		pbarList.add(barMasa2);
 		pbarList.add(barMasa3);
@@ -341,14 +344,13 @@ public class anaEkran {
 		}else {
 			lblList.get(11).setText("");
 		}
-
 }
 		
 	
 	public static void masalaraYerlestir(String[] kisiler,masa[] masalar) {
-		int[][] yerlestirmeSirasi = new int[][] {{1, 1,	1,	1,	1,	1,	1,	1,	1,	1,},	//oncelik Marisi
-												{1,  1,	1,	1,	1,	1,	1,	1,	1,	1,},
-												{1,  1,	1,	1,	0,	1,	1,	0,	1,	1,},
+		int[][] yerlestirmeSirasi = new int[][] {{1, 1,	1,	1,	1,	1,	1,	1,	1,	1,},	//masalara kiþiler daðýtýlýrken
+												{1,  1,	1,	1,	1,	1,	1,	1,	1,	1,},	//buradaki öncelik sýralarýna göre
+												{1,  1,	1,	1,	0,	1,	1,	0,	1,	1,},	//daðýtýlýr
 												{1,  1,	1,	1,	0,	1,	1,	0,	1,	1,},
 												{1,	 1,	1,	1,	0,	1,	1,	0,	1,	1,},
 												{1,	 0,	0,	1,	0,	0,	1,	0,	1,	0,},
@@ -368,7 +370,7 @@ public class anaEkran {
 			if(kisiler.length==k) break;
 		}
 	}
-	public static masa[] masaDizisiOlustur(){
+	public static masa[] masaDizisiOlustur(){ //5 tane 
 		masa[] masalar = new masa[10];
 		int i=0,j=0,k=0;
 		for(;i<2;i++) masalar[i] = new masa(10);
