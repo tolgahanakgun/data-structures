@@ -35,6 +35,7 @@ public class anaEkran {
 		try {
 			anaEkran window = new anaEkran();
 			window.open();
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -91,8 +92,8 @@ public class anaEkran {
 		barMasa9.setToolTipText("");
 		barMasa9.setBounds(173, 490, 801, 17);
 		
-		ProgressBar barRestoran = new ProgressBar(shell, SWT.NONE);
-		barRestoran.setBounds(173, 590, 801, 17);
+		ProgressBar barRestorant = new ProgressBar(shell, SWT.NONE);
+		barRestorant.setBounds(173, 590, 801, 17);
 		
 		pbarList.add(barMasa1);
 		pbarList.add(barMasa2);
@@ -104,7 +105,7 @@ public class anaEkran {
 		pbarList.add(barMasa8);
 		pbarList.add(barMasa9);
 		pbarList.add(barMasa10);
-		pbarList.add(barRestoran);	
+		pbarList.add(barRestorant);	
 		
 		Label lblNewLabel = new Label(shell, SWT.NONE);
 		lblNewLabel.setBounds(10, 27, 81, 15);
@@ -142,9 +143,10 @@ public class anaEkran {
 		lblMasaKii_6.setText("9. Masa(4 Ki\u015Fi)");
 		lblMasaKii_6.setBounds(10, 492, 81, 15);
 		
-		Label lblRestoranGeneli = new Label(shell, SWT.NONE);
-		lblRestoranGeneli.setText("Restoran Geneli");
-		lblRestoranGeneli.setBounds(10, 592, 81, 15);
+		Label lblRestorantGeneli = new Label(shell, SWT.NONE);
+		lblRestorantGeneli.setFont(SWTResourceManager.getFont("Segoe UI", 10, SWT.BOLD));
+		lblRestorantGeneli.setText("      Restorant \n        Geneli");
+		lblRestorantGeneli.setBounds(0, 590, 91, 45);
 		
 		Label lblMasaKii_7 = new Label(shell, SWT.NONE);
 		lblMasaKii_7.setText("10. Masa(4 Ki\u015Fi)");
@@ -227,7 +229,8 @@ public class anaEkran {
 				for (ProgressBar pBar:pbarList) {
 					pBar.setSelection(0);
 				}
-				masalariYazdir(pbarList,lblList,txtKisler,combo.getSelectionIndex()+1);
+					masa masa = new masa();
+					masa.masalariYazdir(pbarList, lblList, txtKisler, combo.getSelectionIndex()+1);
 				}
 			}
 		});
@@ -283,15 +286,15 @@ public class anaEkran {
 		lblMasa10.setAlignment(SWT.RIGHT);
 		lblMasa10.setBounds(97, 540, 70, 15);
 		
-		Label lblRestoran = new Label(shell, SWT.NONE);
-		lblRestoran.setText("0");
-		lblRestoran.setAlignment(SWT.RIGHT);
-		lblRestoran.setBounds(97, 592, 70, 15);
+		Label lblRestorant = new Label(shell, SWT.NONE);
+		lblRestorant.setText("0");
+		lblRestorant.setAlignment(SWT.RIGHT);
+		lblRestorant.setBounds(85, 592, 82, 15);
 		
 		Label lblArtanlar = new Label(shell, SWT.NONE);
 		lblArtanlar.setForeground(SWTResourceManager.getColor(SWT.COLOR_RED));
 		lblArtanlar.setFont(SWTResourceManager.getFont("Segoe UI", 12, SWT.BOLD));
-		lblArtanlar.setBounds(40, 613, 314, 56);
+		lblArtanlar.setBounds(97, 618, 314, 56);
 		lblArtanlar.setText("");
 		
 		lblList.add(lblMasa1);
@@ -304,78 +307,12 @@ public class anaEkran {
 		lblList.add(lblMasa8);
 		lblList.add(lblMasa9);
 		lblList.add(lblMasa10);
-		lblList.add(lblRestoran);
+		lblList.add(lblRestorant);
 		lblList.add(lblArtanlar);
 		
 		Label lblKiiSays = new Label(shell, SWT.NONE);
 		lblKiiSays.setBounds(491, 634, 55, 15);
 		lblKiiSays.setText("Ki\u015Fi Say\u0131s\u0131");
-		
 
-
-	}
-
-	public static void masalariYazdir(ArrayList<ProgressBar> pbarList,ArrayList<Label> lblList, ArrayList<Text> txtKisler2, int kisiSayisi){
-		randomNames rnmsNames = new randomNames();
-		masa[] masalar = masaDizisiOlustur();
-		masalaraYerlestir(rnmsNames.isimleriOku(kisiSayisi), masalar);
-		String geciciString = new String();
-		int j=0, i;
-		for(i=0;i<10;i++){
-			for(String str: masalar[i].oku()){
-				if(str==null)
-					break;
-				j++;
-				geciciString+=(j+"."+str+" ");
-			}
-			j=0;
-			if(geciciString!=null)
-			txtKisler2.get(i).setText(geciciString);
-			geciciString="";
-			pbarList.get(i).setSelection(masalar[i].masaDolulukYuzdesi());
-			lblList.get(i).setText(masalar[i].kacKisiVar()+" kisi,  "+"%"+String.valueOf(masalar[i].masaDolulukYuzdesi()));
-			
-		}
-		pbarList.get(i).setSelection((int)(100/((double)64/kisiSayisi)));
-		lblList.get(i).setText(kisiSayisi+" kisi,  "+"%"+(int)(100/((double)64/kisiSayisi)));
-		if(kisiSayisi>64){
-			lblList.get(11).setText("!!! " + String.valueOf(kisiSayisi-64) +" müþteri ayakta kalmýþtýr"+"\n"+
-					String.valueOf((int)Math.ceil((double)(kisiSayisi-64)/4)) + " tane daha 4 kiþilik masa gerekmektedir");
-		}else {
-			lblList.get(11).setText("");
-		}
-}
-		
-	
-	public static void masalaraYerlestir(String[] kisiler,masa[] masalar) {
-		int[][] yerlestirmeSirasi = new int[][] {{1, 1,	1,	1,	1,	1,	1,	1,	1,	1,},	//masalara kiþiler daðýtýlýrken
-												{1,  1,	1,	1,	1,	1,	1,	1,	1,	1,},	//buradaki öncelik sýralarýna göre
-												{1,  1,	1,	1,	0,	1,	1,	0,	1,	1,},	//daðýtýlýr
-												{1,  1,	1,	1,	0,	1,	1,	0,	1,	1,},
-												{1,	 1,	1,	1,	0,	1,	1,	0,	1,	1,},
-												{1,	 0,	0,	1,	0,	0,	1,	0,	1,	0,},
-												{1,	 0,	0,	1,	0,	0,	1,	0,	1,	0,},
-												{1,	 0,	0,	1,	0,	0,	1,	0,	1,	0,},
-												{1,	 0,	0,	1,	0,	0,	1,	0,	1,	0,},
-												{1,	 0,	0,	1,	0,	0,	1,	0,	1,	0}};
-		int i=0,j=0,k=0;
-		for(i=0;i<10;i++){
-			for(j=0;j<10;j++){
-				if(yerlestirmeSirasi[j][i]==1){
-					masalar[j].masayaOturt(kisiler[k]);
-					k++;
-				}
-				if(kisiler.length==k) break;
-			}
-			if(kisiler.length==k) break;
-		}
-	}
-	public static masa[] masaDizisiOlustur(){ //5 tane 
-		masa[] masalar = new masa[10];
-		int i=0,j=0,k=0;
-		for(;i<2;i++) masalar[i] = new masa(10);
-		for(;j<3;j++) masalar[i+j] = new masa(8);
-		for(;k<5;k++) masalar[i+j+k] = new masa(4);
-		return masalar;
 	}
 }

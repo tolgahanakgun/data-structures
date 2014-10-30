@@ -11,7 +11,7 @@ public class randomNames {
 			"Þule", "Tuðçe","Hadise", "Gözde", "Esra", "Tuðba"};
 	
 	String[] soyIsimler = new String[] {"Atik", "Emircan", "Ýpekçi","Bursalý",
-			"Kaya", "Yýlmaz", "Yýldýz", "Düzyatan", "Ersoy", "Yerlikaya",
+			"Kaya", "Yýlmaz", "Komþukýzý", "Düzyatan", "Ersoy", "Yerlikaya",
 			"Sarý","Þansal","Ulusay","Türker","Üstün","Yüksel","Uður",
 			"Ateþ","Düzoba","Kýlýç"};
 	
