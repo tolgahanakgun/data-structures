@@ -1,6 +1,6 @@
 package dataProjectPart_II;
-import java.util.ArrayList;
 
+import java.util.ArrayList;
 import org.eclipse.swt.widgets.Label;
 import org.eclipse.swt.widgets.ProgressBar;
 import org.eclipse.swt.widgets.Text;
@@ -8,6 +8,10 @@ import org.eclipse.swt.widgets.Text;
 public class masa{
 	String[] kisiler;
 	int masadakiKisiSayisi;
+	public static ayaktaKalanlarForm ayaktaKalanlarFormReferans; //bu sýnýftan türetilen nesnelerin sayýsýndan
+																 //baðýmsýz olarak tek bir ayaktakalanlar formu
+																 //olacaktýr ve bununda bu sýnýfýn diðer nesneleri için 
+																 //farklýlýk göstermemesi gerekir bu yüzden public statictir
 	
 	public masa(int masadaOturacakKisiSayisi){  
 		kisiler = new String[masadaOturacakKisiSayisi];
@@ -106,8 +110,8 @@ public class masa{
 			lblList.get(11).setText("");
 		}
 		if(kisilerStrings.length>64){
-			ayaktaKalanlarForm frmAyaktaKalanlar = new ayaktaKalanlarForm(kisilerStrings);
-			frmAyaktaKalanlar.open();
+			ayaktaKalanlarFormReferans = new ayaktaKalanlarForm(kisilerStrings);
+			ayaktaKalanlarFormReferans.open();
 		}
 			
 	}	

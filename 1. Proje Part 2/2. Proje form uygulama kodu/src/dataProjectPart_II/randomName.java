@@ -5,14 +5,14 @@ import java.util.Collections;
 public class randomName {
 	
 	String[] isimler = new String[] {"Mehmet", "Yunus","Aybars","Nagihan", 
-			"Merve", "Gülcan", "Cemal", "Serkan", "Güldehan", 
-			"Tunahan", "Barbaros", "Bilal", "Enes", "Selçuk", 
-			"Þule", "Tuðçe","Hadise", "Gözde", "Esra", "Tuðba"};
+									"Merve", "Gülcan", "Cemal", "Serkan", "Güldehan", 
+									"Tunahan", "Barbaros", "Bilal", "Enes", "Selçuk", 
+									"Þule", "Tuðçe","Hadise", "Gözde", "Esra", "Tuðba"};
 	
 	String[] soyIsimler = new String[] {"Sartekin", "Emircan", "Ýpekçi","Bursalý",
-			"Kaya", "Altýntop", "Kalaycý", "Düzyatan", "Ersoy", "Yerlikaya",
-			"Sarý","Þansal","Ulusay","Türker","Üstün","Yüksel","Uður",
-			"Ateþ","Düzoba","Kýlýç"};
+										"Kaya", "Altýntop", "Kalaycý", "Düzyatan", "Ersoy", "Yerlikaya",
+										"Sarý","Þansal","Ulusay","Türker","Üstün","Yüksel","Uður",
+										"Ateþ","Düzoba","Kýlýç"};
 	
 	String[] karistirilmisIsimleString = new String[400];
 	

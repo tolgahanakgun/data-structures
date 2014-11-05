@@ -7,7 +7,6 @@ import org.eclipse.swt.SWT;
 import org.eclipse.swt.widgets.Table;
 import org.eclipse.wb.swt.SWTResourceManager;
 
-
 public class ayaktaKalanlarForm {
 
 	protected Shell shell;
