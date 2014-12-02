@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<classpath>
+	<classpathentry kind="src" path="1. Proje Part 1/ds_1a/src"/>
+	<classpathentry kind="src" path="1. Proje Part 2/2. Proje form uygulama kodu/src"/>
+	<classpathentry kind="src" path="1. Proje Part 2/src"/>
+	<classpathentry kind="lib" path="1. Proje Part 2/proje.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="output" path="1. Proje Part 2/bin"/>
+</classpath>
