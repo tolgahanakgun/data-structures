@@ -22,7 +22,7 @@ public class ArabaBagliListe {
 			listeSonuDugumu=eklenecekAraba; //liste sonuna eklenen aracın referansı atanıyor
 			eklenecekAraba.setSonrakiAraba(listeBasiDugumu); //liste dairesel bağlı yapılıyor
 			arabaSayisi++;
-		}
+		} 
 	}
 	
 	public Araba arabaCikar() {
