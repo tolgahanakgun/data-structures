@@ -38,4 +38,16 @@ public class ArabaBagliListe {
 	public int getListedekiArabaSayisi() {
 		return arabaSayisi;
 	}
+	
+	public Araba get(int indis){
+		if(indis<arabaSayisi){
+			Araba gecici = listeBasiDugumu.getSonrakiAraba();
+			for(int i=0;i<indis;i++){
+				gecici = gecici.getSonrakiAraba();
+			}
+			return gecici;
+		}
+		else
+			return null;
+	}
 }
