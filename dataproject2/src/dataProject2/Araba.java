@@ -3,7 +3,7 @@ package dataProject2;
 public class Araba {
 	private String renk;
 	private Araba sonrakiAraba;
-	int beklemeSuresi;
+	public int beklemeSuresi;
 	
 	public Araba(String renk){
 		this.renk = renk;

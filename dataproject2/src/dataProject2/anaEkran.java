@@ -1,6 +1,7 @@
 package dataProject2;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -11,9 +12,11 @@ public class anaEkran {
 
 	public static void main(String[] args) {
 		
-		Stack<Araba> yigin = new Stack<Araba>();	
-		Queue<Araba> kuyruk = new LinkedList<Araba>();
-		ArabaBagliListe lstArabaBagliListe = new ArabaBagliListe();
+		long baslamaZamani = new Date().getTime();
+		long araZaman = 0;
+		Stack<Araba> yigin = new Stack<Araba>();//Bodrum kat	
+		Queue<Araba> kuyruk = new LinkedList<Araba>();//1. kat
+		ArabaBagliListe lstArabaBagliListe = new ArabaBagliListe();//2. kat
 		rastgeleArabaEkle(yigin, lstArabaBagliListe,kuyruk,15);
 		
 		ArrayList kat = new ArrayList();
@@ -27,26 +30,57 @@ public class anaEkran {
 			int hangiKat = rn.nextInt(2);
 			if(hangiKat == 0){//Bodrum kattan araba cýkarýlýyorsa.
 				if(yigin.size()!=0){
+					long ara1 = new Date().getTime();
 					System.out.println("Bodrum kattan cikan arabanin rengi: " + yigin.peek().getRenk() + "\n");
+					long ara2 = new Date().getTime();
+					araZaman += ara2 - ara1;
 					kuyruk.add(yigin.pop());
 					arabalariListele(yigin, lstArabaBagliListe, kuyruk);
 				}
 			}
 			else{//2. kattan araba cýkarýlýyorsa.			
 				if(lstArabaBagliListe.getListedekiArabaSayisi()!=0){
+					long ara1 = new Date().getTime();
 					System.out.println("2. kattan cikan arabanin rengi: " + lstArabaBagliListe.get(0).getRenk() + "\n");
+					long ara2 = new Date().getTime();
+					araZaman += ara2 - ara1;
 					kuyruk.add(lstArabaBagliListe.arabaCikar());
 					arabalariListele(yigin, lstArabaBagliListe, kuyruk);
 				}
 			}
 		}while(yigin.size()!=0 || lstArabaBagliListe.getListedekiArabaSayisi()!=0);
+		
+		long bitisZamani = new Date().getTime();
+		float gecenZaman = bitisZamani - baslamaZamani - araZaman;
+		int toplamCozulebilenProblem;
+		System.out.println("Bir problemin çözülme zamaný: "+gecenZaman);
+		
+		toplamCozulebilenProblem = (int)(5/(gecenZaman/1000));
+		System.out.println("5 saniyede çözülebilecek problem sayisi: "+toplamCozulebilenProblem);
+		
 		Araba[] a = new Araba[45];
 		kuyruk.toArray(a);
 		System.out.println("Son kalan arabanýn rengi: " + a[44].getRenk());
+		System.out.println();
 		
 		CikisKuyrugu cikisKuyruk = new CikisKuyrugu(45);
-		int beklemeSuresi = rn.nextInt(291)+10;
+		Araba araba;
+		int toplamCikisSuresi = 0;
 		
+		do{//Arabalar cikis kuyruguna ekleniyor...
+			int beklemeSuresi = rn.nextInt(291)+10;
+			araba = kuyruk.poll();
+			toplamCikisSuresi += beklemeSuresi;
+			araba.beklemeSuresi = toplamCikisSuresi;
+			cikisKuyruk.enque(araba);
+		}while(!kuyruk.isEmpty());
+		
+		int i = 0;
+		while(!cikisKuyruk.bosMu()){//FIFO kuyrugundan arabalar cikariliyor...
+			i++;
+			araba = cikisKuyruk.deque();
+			System.out.println(i + ". arabanýn toplam bekleme süresi: " + araba.beklemeSuresi + " sn");
+		}
 	}
 
 	private static void rastgeleArabaEkle(Stack<Araba> yigin, ArabaBagliListe arabaBagliListe, Queue<Araba> kuyruk, int eklenecekArabaSayýsý){
