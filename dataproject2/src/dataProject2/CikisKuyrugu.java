@@ -1,5 +1,7 @@
 package dataProject2;
 
+import java.util.Iterator;
+
 public class CikisKuyrugu {
 
 	private int boyut;

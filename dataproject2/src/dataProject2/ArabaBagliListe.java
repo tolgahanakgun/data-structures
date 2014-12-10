@@ -1,19 +1,25 @@
 package dataProject2;
 
+import java.util.Random;
+
 public class ArabaBagliListe {
-	private Araba listeBasiDugumu = new Araba("ilk");	//baðlý listemiz daireseldir fakat araba eklemeleri hep sona yapýlacaðýndan
+	private Araba listeBasiDugumu;	//baðlý listemiz daireseldir fakat araba eklemeleri hep sona yapýlacaðýndan
 	private Araba listeSonuDugumu;	//liste sonuna kolay eriþim için liste sonu ayrýca tutulmaktadýr
 	private int arabaSayisi;
+	private static int nSayisi; //n. araba çýkar kuyruktan
+	private Araba sonCikanAraba=null;
 	
 	public ArabaBagliListe() {
-		listeBasiDugumu.setSonrakiAraba(listeBasiDugumu);
+		listeBasiDugumu=null;
 		listeSonuDugumu=listeBasiDugumu;
 		arabaSayisi=0;
+		Random rd = new Random();
+		nSayisi = rd.nextInt(15);
 	}
 	
 	public void arabaEkle(Araba eklenecekAraba) {
-		if(listeBasiDugumu.getSonrakiAraba() == listeBasiDugumu){ //liste boþsa baþa ekle
-			listeBasiDugumu.setSonrakiAraba(eklenecekAraba);
+		if(listeBasiDugumu==null){ //liste boþsa baþa ekle
+			listeBasiDugumu=eklenecekAraba;
 			listeSonuDugumu=eklenecekAraba;
 			eklenecekAraba.setSonrakiAraba(listeBasiDugumu);
 			arabaSayisi++;
@@ -26,10 +32,25 @@ public class ArabaBagliListe {
 	}
 	
 	public Araba arabaCikar() {
-		if(listeBasiDugumu.getSonrakiAraba()!=listeBasiDugumu){
-			Araba geciciAraba=listeBasiDugumu.getSonrakiAraba();
-			listeBasiDugumu.setSonrakiAraba(geciciAraba.getSonrakiAraba());
-			arabaSayisi--; 
+		Araba oncekiAraba;
+		Araba geciciAraba;
+		if(sonCikanAraba!=null){
+			oncekiAraba = sonCikanAraba;
+			geciciAraba=oncekiAraba.getSonrakiAraba();
+		}else{
+			oncekiAraba=listeBasiDugumu;
+			geciciAraba=oncekiAraba.getSonrakiAraba();
+		}
+		if(listeBasiDugumu!=null){
+			arabaSayisi--;
+			
+			for(int i=0;i<nSayisi;i++){
+				oncekiAraba=geciciAraba;
+				geciciAraba=geciciAraba.getSonrakiAraba();
+			}
+			
+			oncekiAraba.setSonrakiAraba(geciciAraba.getSonrakiAraba());
+			sonCikanAraba=oncekiAraba;
 			return geciciAraba;
 		}
 		return null;
@@ -49,5 +70,9 @@ public class ArabaBagliListe {
 		}
 		else
 			return null;
+	}
+	
+	public int getNSayisi() {
+		return nSayisi;
 	}
 }

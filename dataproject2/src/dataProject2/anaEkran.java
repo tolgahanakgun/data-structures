@@ -1,16 +1,21 @@
 package dataProject2;
 
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
 import java.util.Stack;
+import java.util.PriorityQueue;
 
 
 public class anaEkran {
 
+	@SuppressWarnings("unchecked")
 	public static void main(String[] args) {
+		Comparator<Araba> cmpAraba = new ArabaComparator();
+		PriorityQueue<Araba> pqAraba = new PriorityQueue<Araba>(45,cmpAraba);
 		
 		long baslamaZamani = new Date().getTime();
 		long araZaman = 0;
@@ -19,7 +24,7 @@ public class anaEkran {
 		ArabaBagliListe lstArabaBagliListe = new ArabaBagliListe();//2. kat
 		rastgeleArabaEkle(yigin, lstArabaBagliListe,kuyruk,15);
 		
-		ArrayList kat = new ArrayList();
+		ArrayList<Object> kat = new ArrayList<Object>();
 		kat.add(yigin);
 		kat.add(kuyruk);
 		kat.add(lstArabaBagliListe);
@@ -41,10 +46,11 @@ public class anaEkran {
 			else{//2. kattan araba cýkarýlýyorsa.			
 				if(lstArabaBagliListe.getListedekiArabaSayisi()!=0){
 					long ara1 = new Date().getTime();
-					System.out.println("2. kattan cikan arabanin rengi: " + lstArabaBagliListe.get(0).getRenk() + "\n");
+					Araba geciciAraba=lstArabaBagliListe.arabaCikar();
+					System.out.println("2. kattan cikan arabanin rengi: " + geciciAraba.getRenk() + "\n");
 					long ara2 = new Date().getTime();
 					araZaman += ara2 - ara1;
-					kuyruk.add(lstArabaBagliListe.arabaCikar());
+					kuyruk.add(geciciAraba);
 					arabalariListele(yigin, lstArabaBagliListe, kuyruk);
 				}
 			}
@@ -53,7 +59,7 @@ public class anaEkran {
 		long bitisZamani = new Date().getTime();
 		float gecenZaman = bitisZamani - baslamaZamani - araZaman;
 		int toplamCozulebilenProblem;
-		System.out.println("Bir problemin çözülme zamaný: "+gecenZaman);
+		System.out.println("Bir problemin çözülme zamaný: "+gecenZaman+" ms");
 		
 		toplamCozulebilenProblem = (int)(5/(gecenZaman/1000));
 		System.out.println("5 saniyede çözülebilecek problem sayisi: "+toplamCozulebilenProblem);
@@ -66,12 +72,23 @@ public class anaEkran {
 		CikisKuyrugu cikisKuyruk = new CikisKuyrugu(45);
 		Araba araba;
 		int toplamCikisSuresi = 0;
+		int sira=0;
+		int[] beklemeDizi = new int[46];
+		int[] islemSuresiDizisi = new int[46];
+		int toplamBeklemeSuresi=0;
 		
 		do{//Arabalar cikis kuyruguna ekleniyor...
 			int beklemeSuresi = rn.nextInt(291)+10;
 			araba = kuyruk.poll();
+			sira++;
+			Araba pqEklenecekAraba = new Araba(araba.getRenk(), beklemeSuresi, sira);
+			pqAraba.add(pqEklenecekAraba);
+			islemSuresiDizisi[sira]=beklemeSuresi;
 			toplamCikisSuresi += beklemeSuresi;
+			beklemeDizi[sira]=toplamCikisSuresi;
+			toplamBeklemeSuresi+=toplamCikisSuresi;
 			araba.beklemeSuresi = toplamCikisSuresi;
+			araba.setSiraNo(sira);
 			cikisKuyruk.enque(araba);
 		}while(!kuyruk.isEmpty());
 		
@@ -81,9 +98,76 @@ public class anaEkran {
 			araba = cikisKuyruk.deque();
 			System.out.println(i + ". arabanýn toplam bekleme süresi: " + araba.beklemeSuresi + " sn");
 		}
+		
+		i=0;
+		Araba gecici = null;
+		int toplamCikisSuresi2=0;
+		int toplamBeklemeSuresi2=0;
+		System.out.println("\n\n\n--------Arabalardan iþlem süresi en az olan önce çýkýyor------------");
+		
+		while(!pqAraba.isEmpty()){
+			gecici=pqAraba.poll();
+			toplamCikisSuresi2+=gecici.getBeklemeSuresi();
+			toplamBeklemeSuresi2+=toplamCikisSuresi2;
+			if(beklemeDizi[gecici.getSiraNo()]>toplamCikisSuresi2)
+				System.out.println(gecici.getSiraNo()+". Araba daha az bekledi---"+beklemeDizi[gecici.getSiraNo()]+
+						">"+toplamCikisSuresi2);
+		}
+		System.out.println("\n-----Istatistikler------");
+		System.out.println("Oncelik kuyrugu kullanilmadan onceki ort bekleme suresi = "+toplamBeklemeSuresi/45+" sn");
+		System.out.println("Oncelik kuyrugu kullanildiktan sonraki ort bekleme suresi = "+toplamBeklemeSuresi2/45+" sn");
+		System.out.println("Ortalama bekleme suresindeki fark = "+(toplamBeklemeSuresi/45-toplamBeklemeSuresi2/45)+" sn");
+		System.out.println("Ortalama bekleme suresindeki kazanc yuzdesi = % "+100*((float)(toplamBeklemeSuresi-toplamBeklemeSuresi2)/toplamBeklemeSuresi));
+		
+		LinkedList<Araba>[] kuyrukDizisi = new LinkedList[4];
+		
+		for(int o=0;o<4;o++)
+			kuyrukDizisi[o]=new LinkedList<Araba>();
+		
+		for(int j=0;j<45;j++)
+			kuyrukDizisi[j%4].add(new Araba(islemSuresiDizisi[j+1], j+1));
+
+		while(!kuyrukDizisi[0].isEmpty() || !kuyrukDizisi[1].isEmpty() ||
+				!kuyrukDizisi[2].isEmpty() ||!kuyrukDizisi[3].isEmpty()){
+			int minIndis = 0;
+			for(int k=0;k<4;k++){
+				if(kuyrukDizisi[k].peek()!=null){
+					minIndis=k;
+					break;
+				}	
+			}
+			Araba geciciAraba;
+			for(int k=1;k<4;k++){
+				if(kuyrukDizisi[minIndis].peek()!=null && kuyrukDizisi[k].peek()!=null)
+					if(kuyrukDizisi[minIndis].peek().getBeklemeSuresi()>kuyrukDizisi[k].peek().getBeklemeSuresi())
+						minIndis=k;
+			}
+			cikisKuyruk.enque(kuyrukDizisi[minIndis].pop());
+		}
+		int toplamCikisSuresi3=0;
+		int toplamBeklemeSuresi3=0;
+		System.out.println("\n\n\n----------Arabalardan 4lu kuyruktan iþlem süresi en az olan öncelikli çýkýyor---------");
+		while (!cikisKuyruk.bosMu()) {
+			gecici=cikisKuyruk.deque();
+			toplamCikisSuresi3+=gecici.getBeklemeSuresi();
+			toplamBeklemeSuresi3+=toplamCikisSuresi3;
+			if(beklemeDizi[gecici.getSiraNo()]>toplamCikisSuresi3)
+				System.out.println(gecici.getSiraNo()+". Araba daha az bekledi---"+beklemeDizi[gecici.getSiraNo()]+
+						">"+toplamCikisSuresi3);
+		}
+		System.out.println("\n-----Istatistikler------");
+		System.out.println("Oncelik kuyrugu kullanilmadan onceki ort bekleme suresi = "+toplamBeklemeSuresi/45+" sn");
+		System.out.println("4lü kuyruk kullanildiktan sonraki ort bekleme suresi = "+toplamBeklemeSuresi3/45+" sn");
+		System.out.println("Ortalama bekleme suresindeki fark = "+(toplamBeklemeSuresi/45-toplamBeklemeSuresi3/45)+" sn");
+		System.out.println("Ortalama bekleme suresindeki kazanc yuzdesi = % "+100*((float)(toplamBeklemeSuresi-toplamBeklemeSuresi3)/toplamBeklemeSuresi));
+		System.out.println("\n\n\n--------Arabalarýn iþlem süresi------------");
+		for(i=1;i<=45;i++)
+			System.out.println(i+". "+islemSuresiDizisi[i]);
+		System.out.println("----Bagli listedeki çýkarmlar n="+lstArabaBagliListe.getNSayisi()+" icin yapilmistir----");
 	}
 
 	private static void rastgeleArabaEkle(Stack<Araba> yigin, ArabaBagliListe arabaBagliListe, Queue<Araba> kuyruk, int eklenecekArabaSayýsý){
+		@SuppressWarnings("unused")
 		Random rnd = new Random();
 		for(int i=0;i<eklenecekArabaSayýsý;i++){
 			yigin.push(new Araba(rastgeleRenkBelirle(i)));
