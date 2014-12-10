@@ -2,7 +2,6 @@ package dataProject2;
 
 import java.util.ArrayList;
 import java.util.Comparator;
-import java.util.Date;
 import java.util.LinkedList;
 import java.util.Queue;
 import java.util.Random;
@@ -149,7 +148,7 @@ public class anaEkran {
 		System.out.println("\n\n\n--------Arabalarýn iþlem süresi------------");
 		for(i=1;i<=45;i++)
 			System.out.println(i+". "+islemSuresiDizisi[i]);
-		System.out.println("----Bagli listedeki çýkarmlar n="+lstArabaBagliListe.getNSayisi()+" icin yapilmistir----");
+		System.out.println("----Bagli listedeki çýkarmalar n="+lstArabaBagliListe.getNSayisi()+" icin yapilmistir----");
 
 		long start = System.currentTimeMillis();
 		long end = start + 5*1000; // 60 seconds * 1000 ms/sec
@@ -159,7 +158,7 @@ public class anaEkran {
 		    zamaniOlc();
 		    sayac++;
 		}
-		System.out.println("------Bilgisayarimiz 5 saniye de "+ sayac +" tane otopark problemi cosebilir");
+		System.out.println("------Bilgisayarimiz 5 saniye de "+ sayac +" tane otopark problemi cozebilir");
 
 
 	}
