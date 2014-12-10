@@ -16,9 +16,7 @@ public class anaEkran {
 	public static void main(String[] args) {
 		Comparator<Araba> cmpAraba = new ArabaComparator();
 		PriorityQueue<Araba> pqAraba = new PriorityQueue<Araba>(45,cmpAraba);
-		
-		long baslamaZamani = new Date().getTime();
-		long araZaman = 0;
+
 		Stack<Araba> yigin = new Stack<Araba>();//Bodrum kat	
 		Queue<Araba> kuyruk = new LinkedList<Araba>();//1. kat
 		ArabaBagliListe lstArabaBagliListe = new ArabaBagliListe();//2. kat
@@ -35,34 +33,22 @@ public class anaEkran {
 			int hangiKat = rn.nextInt(2);
 			if(hangiKat == 0){//Bodrum kattan araba cýkarýlýyorsa.
 				if(yigin.size()!=0){
-					long ara1 = new Date().getTime();
 					System.out.println("Bodrum kattan cikan arabanin rengi: " + yigin.peek().getRenk() + "\n");
-					long ara2 = new Date().getTime();
-					araZaman += ara2 - ara1;
+
 					kuyruk.add(yigin.pop());
 					arabalariListele(yigin, lstArabaBagliListe, kuyruk);
 				}
 			}
 			else{//2. kattan araba cýkarýlýyorsa.			
 				if(lstArabaBagliListe.getListedekiArabaSayisi()!=0){
-					long ara1 = new Date().getTime();
 					Araba geciciAraba=lstArabaBagliListe.arabaCikar();
 					System.out.println("2. kattan cikan arabanin rengi: " + geciciAraba.getRenk() + "\n");
-					long ara2 = new Date().getTime();
-					araZaman += ara2 - ara1;
 					kuyruk.add(geciciAraba);
 					arabalariListele(yigin, lstArabaBagliListe, kuyruk);
 				}
 			}
 		}while(yigin.size()!=0 || lstArabaBagliListe.getListedekiArabaSayisi()!=0);
 		
-		long bitisZamani = new Date().getTime();
-		float gecenZaman = bitisZamani - baslamaZamani - araZaman;
-		int toplamCozulebilenProblem;
-		System.out.println("Bir problemin çözülme zamaný: "+gecenZaman+" ms");
-		
-		toplamCozulebilenProblem = (int)(5/(gecenZaman/1000));
-		System.out.println("5 saniyede çözülebilecek problem sayisi: "+toplamCozulebilenProblem);
 		
 		Araba[] a = new Araba[45];
 		kuyruk.toArray(a);
@@ -164,6 +150,18 @@ public class anaEkran {
 		for(i=1;i<=45;i++)
 			System.out.println(i+". "+islemSuresiDizisi[i]);
 		System.out.println("----Bagli listedeki çýkarmlar n="+lstArabaBagliListe.getNSayisi()+" icin yapilmistir----");
+
+		long start = System.currentTimeMillis();
+		long end = start + 5*1000; // 60 seconds * 1000 ms/sec
+		int sayac=0;
+		while (System.currentTimeMillis() < end)
+		{
+		    zamaniOlc();
+		    sayac++;
+		}
+		System.out.println("------Bilgisayarimiz 5 saniye de "+ sayac +" tane otopark problemi cosebilir");
+
+
 	}
 
 	private static void rastgeleArabaEkle(Stack<Araba> yigin, ArabaBagliListe arabaBagliListe, Queue<Araba> kuyruk, int eklenecekArabaSayýsý){
@@ -217,6 +215,117 @@ public class anaEkran {
 		for(j=0;j<arabaBagliListe.getListedekiArabaSayisi();j++)
 			System.out.println((j+1)+". "+arabaBagliListe.get(j).getRenk());
 		System.out.println();
+	}
+	
+	private static void zamaniOlc() {
+		Comparator<Araba> cmpAraba = new ArabaComparator();
+		PriorityQueue<Araba> pqAraba = new PriorityQueue<Araba>(45,cmpAraba);
+		Stack<Araba> yigin = new Stack<Araba>();//Bodrum kat	
+		Queue<Araba> kuyruk = new LinkedList<Araba>();//1. kat
+		ArabaBagliListe lstArabaBagliListe = new ArabaBagliListe();//2. kat
+		rastgeleArabaEkle(yigin, lstArabaBagliListe,kuyruk,15);
+		
+		ArrayList<Object> kat = new ArrayList<Object>();
+		kat.add(yigin);
+		kat.add(kuyruk);
+		kat.add(lstArabaBagliListe);
+		
+		//arabalariListele(yigin, lstArabaBagliListe, kuyruk);
+		Random rn = new Random();
+		do{
+			int hangiKat = rn.nextInt(2);
+			if(hangiKat == 0){//Bodrum kattan araba cýkarýlýyorsa.
+				if(yigin.size()!=0){
+					
+					kuyruk.add(yigin.pop());
+				}
+			}
+			else{//2. kattan araba cýkarýlýyorsa.			
+				if(lstArabaBagliListe.getListedekiArabaSayisi()!=0){
+					Araba geciciAraba=lstArabaBagliListe.arabaCikar();
+					kuyruk.add(geciciAraba);
+				}
+			}
+		}while(yigin.size()!=0 || lstArabaBagliListe.getListedekiArabaSayisi()!=0);
+				
+		Araba[] a = new Araba[45];
+		kuyruk.toArray(a);
+
+		CikisKuyrugu cikisKuyruk = new CikisKuyrugu(45);
+		Araba araba;
+		int toplamCikisSuresi = 0;
+		int sira=0;
+		int[] beklemeDizi = new int[46];
+		int[] islemSuresiDizisi = new int[46];
+		int toplamBeklemeSuresi=0;
+		
+		do{//Arabalar cikis kuyruguna ekleniyor...
+			int beklemeSuresi = rn.nextInt(291)+10;
+			araba = kuyruk.poll();
+			sira++;
+			Araba pqEklenecekAraba = new Araba(araba.getRenk(), beklemeSuresi, sira);
+			pqAraba.add(pqEklenecekAraba);
+			islemSuresiDizisi[sira]=beklemeSuresi;
+			toplamCikisSuresi += beklemeSuresi;
+			beklemeDizi[sira]=toplamCikisSuresi;
+			toplamBeklemeSuresi+=toplamCikisSuresi;
+			araba.beklemeSuresi = toplamCikisSuresi;
+			araba.setSiraNo(sira);
+			cikisKuyruk.enque(araba);
+		}while(!kuyruk.isEmpty());
+		
+		int i = 0;
+		while(!cikisKuyruk.bosMu()){//FIFO kuyrugundan arabalar cikariliyor...
+			i++;
+			araba = cikisKuyruk.deque();
+		}
+		
+		i=0;
+		Araba gecici = null;
+		int toplamCikisSuresi2=0;
+		int toplamBeklemeSuresi2=0;
+		
+		while(!pqAraba.isEmpty()){
+			gecici=pqAraba.poll();
+			toplamCikisSuresi2+=gecici.getBeklemeSuresi();
+			toplamBeklemeSuresi2+=toplamCikisSuresi2;		
+		}
+
+		LinkedList<Araba>[] kuyrukDizisi = new LinkedList[4];
+		
+		for(int o=0;o<4;o++)
+			kuyrukDizisi[o]=new LinkedList<Araba>();
+		
+		for(int j=0;j<45;j++)
+			kuyrukDizisi[j%4].add(new Araba(islemSuresiDizisi[j+1], j+1));
+
+		while(!kuyrukDizisi[0].isEmpty() || !kuyrukDizisi[1].isEmpty() ||
+				!kuyrukDizisi[2].isEmpty() ||!kuyrukDizisi[3].isEmpty()){
+			int minIndis = 0;
+			for(int k=0;k<4;k++){
+				if(kuyrukDizisi[k].peek()!=null){
+					minIndis=k;
+					break;
+				}	
+			}
+			Araba geciciAraba;
+			for(int k=1;k<4;k++){
+				if(kuyrukDizisi[minIndis].peek()!=null && kuyrukDizisi[k].peek()!=null)
+					if(kuyrukDizisi[minIndis].peek().getBeklemeSuresi()>kuyrukDizisi[k].peek().getBeklemeSuresi())
+						minIndis=k;
+			}
+			cikisKuyruk.enque(kuyrukDizisi[minIndis].pop());
+		}
+		int toplamCikisSuresi3=0;
+		int toplamBeklemeSuresi3=0;
+		
+		while (!cikisKuyruk.bosMu()) {
+			gecici=cikisKuyruk.deque();
+			toplamCikisSuresi3+=gecici.getBeklemeSuresi();
+			toplamBeklemeSuresi3+=toplamCikisSuresi3;
+
+		}
+
 	}
 
 }
