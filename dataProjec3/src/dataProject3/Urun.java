@@ -1,13 +1,49 @@
 package dataProject3;
 
-import java.util.LinkedList;
+import java.util.ArrayList;
 
 public class Urun {
     private String urunAdi;
     private String urunKategori;
-    private LinkedList<Urun> lstIlgiliUrunler;
+    private String marka;
+    private String model;
+    private int miktar;
+    private int maliyet;
+    private int satisFiyatý;
+    private ArrayList<String> aciklama;
     private Urun left, right;
     private int N;
+    
+    public String getMarka() {
+		return marka;
+	}
+	public void setMarka(String marka) {
+		this.marka = marka;
+	}
+	public String getModel() {
+		return model;
+	}
+	public void setModel(String model) {
+		this.model = model;
+	}
+	public int getMiktar() {
+		return miktar;
+	}
+	public void setMiktar(int miktar) {
+		this.miktar = miktar;
+	}
+	public int getMaliyet() {
+		return maliyet;
+	}
+	public void setMaliyet(int maliyet) {
+		this.maliyet = maliyet;
+	}
+	public int getSatisFiyatý() {
+		return satisFiyatý;
+	}
+	public void setSatisFiyatý(int satisFiyatý) {
+		this.satisFiyatý = satisFiyatý;
+	}
 	public String getUrunAdi() {
 		return urunAdi;
 	}
@@ -19,12 +55,6 @@ public class Urun {
 	}
 	public void setUrunKategori(String urunKategori) {
 		this.urunKategori = urunKategori;
-	}
-	public LinkedList<Urun> getLstIlgiliUrunler() {
-		return lstIlgiliUrunler;
-	}
-	public void setLstIlgiliUrunler(LinkedList<Urun> lstIlgiliUrunler) {
-		this.lstIlgiliUrunler = lstIlgiliUrunler;
 	}
 	public Urun getLeft() {
 		return left;
@@ -44,7 +74,11 @@ public class Urun {
 	public void setN(int n) {
 		N = n;
 	}
+	public ArrayList<String> getAciklama() {
+		return aciklama;
+	}
+	public void setAciklama(ArrayList<String> aciklama) {
+		this.aciklama = aciklama;
+	}
 	
-	
-
 }
