@@ -4,3 +4,5 @@ C:\Users\TOLGAHAN\gitProjeler\dataProjects\dataProject3C#\DataProjec3CShaRp\Data
 C:\Users\TOLGAHAN\gitProjeler\dataProjects\dataProject3C#\DataProjec3CShaRp\DataProjec3CShaRp\bin\Debug\DataProjec3CShaRp.pdb
 C:\Users\TOLGAHAN\gitProjeler\dataProjects\dataProject3C#\DataProjec3CShaRp\DataProjec3CShaRp\obj\x86\Debug\DataProjec3CShaRp.exe
 C:\Users\TOLGAHAN\gitProjeler\dataProjects\dataProject3C#\DataProjec3CShaRp\DataProjec3CShaRp\obj\x86\Debug\DataProjec3CShaRp.pdb
+C:\Users\TOLGAHAN\gitProjeler\dataProjects\dataProject3C#\DataProjec3CShaRp\DataProjec3CShaRp\obj\x86\Debug\DataProjec3CShaRp.csprojResolveAssemblyReference.cache
+C:\Users\TOLGAHAN\gitProjeler\dataProjects\dataProject3C#\DataProjec3CShaRp\DataProjec3CShaRp\obj\x86\Debug\DataProjec3CShaRp.Form1.resources
