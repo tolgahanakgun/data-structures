@@ -9,6 +9,11 @@ namespace DataProjec3CShaRp
     {
         private Urun root;
 
+        public Urun getRoot()
+        {
+            return root;
+        }
+
         // ağaç boş mu ?
         public bool isEmpty()
         {
@@ -18,7 +23,8 @@ namespace DataProjec3CShaRp
         // ağaçtaki düğüm sayısını döndürür
         public int size()
         {
-            return size(root);
+            if (root == null) return 0; //ağaç boşsa yani root==null ise 0
+            return size(root) + 1;        //eğer eleman varsa da bütün elemanların sayısını döndürür(root!=null ise root da bir elemandır)
         }
 
         // x düğümünün altındaki düğüm sayısını döndürür
@@ -64,7 +70,9 @@ namespace DataProjec3CShaRp
             if (cmp < 0) root.setLeft(put(root.getLeft(), eklenecekUrun));
             else if (cmp > 0) root.setRight(put(root.getRight(), eklenecekUrun));
             else root = eklenecekUrun;
-            root.setN(1 + size(root.getLeft()) + size(root.getRight()));
+            if (root.getLeft() != null && root.getRight() != null)                        //eğer bir dalın sağında ve solunda yaprak
+                root.setN(1 + size(root.getLeft()) + size(root.getRight()) + 1);   //varsa bu dalın N sayısı +2 artmalı
+            else root.setN(1 + size(root.getLeft()) + size(root.getRight()));   //tek bir yaprak varsa buna gerek yoktur
             return root;
         }
 
@@ -142,6 +150,36 @@ namespace DataProjec3CShaRp
         {
             if (x.getRight() == null) return x;
             else return max(x.getRight());
+        }
+
+        public LinkedList<Urun> inOrder(Urun localRoot, float aralik1, float aralik2, LinkedList<Urun> aralikUrun)
+        {
+            if(localRoot != null)
+            {
+                inOrder(localRoot.getLeft(), aralik1, aralik2, aralikUrun);
+                if(localRoot.getSatisFiyatı()>aralik1 && localRoot.getSatisFiyatı()<aralik2)
+                    aralikUrun.AddFirst(localRoot);
+                inOrder(localRoot.getRight(), aralik1, aralik2, aralikUrun);
+
+                return aralikUrun;
+            }
+
+            return null;
+        }
+
+        public LinkedList<Urun> inOrder(Urun localRoot, string kategori, LinkedList<Urun> kategoriUrun)
+        {
+            if (localRoot != null)
+            {
+                inOrder(localRoot.getLeft(), kategori, kategoriUrun);
+                if (localRoot.getUrunKategori() == kategori)
+                    kategoriUrun.AddFirst(localRoot);
+                inOrder(localRoot.getRight(), kategori, kategoriUrun);
+
+                return kategoriUrun;
+            }
+
+            return null;
         }
     }
 

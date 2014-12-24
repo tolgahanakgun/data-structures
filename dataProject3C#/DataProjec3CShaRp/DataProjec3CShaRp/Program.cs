@@ -1,4 +1,5 @@
 ﻿using System;
+using System.IO;
 using System.Collections.Generic;
 using System.Linq;
 using System.Windows.Forms;
@@ -6,72 +7,57 @@ using System.Collections;
 
 namespace DataProjec3CShaRp
 {
+    static class Global
+    {
+        private static BSTUrun bst = new BSTUrun();
+        private static Heap heap = new Heap();
+
+        public static BSTUrun BST
+        {
+            get { return bst; }
+        }
+
+        public static Heap HEAP
+        {
+            get { return heap; }
+        }
+    }
+
     static class Program
     {
         [STAThread]
         static void Main()
         {
             BSTUrun bst = new BSTUrun();
-
+            MarkaModel mm = new MarkaModel();
             Urun urun1 = new Urun();
-            urun1.setUrunAdi("asdafsdasd");
-            urun1.setSatisFiyatı(10);
 
-            Urun urun2 = new Urun();
-            urun2.setUrunAdi("sdafsdasd");
-            urun2.setSatisFiyatı(100);
+            
 
-            Urun urun3 = new Urun();
-            urun3.setUrunAdi("dafsdasd");
-            urun3.setSatisFiyatı(1000);
+            
 
-            bst.put(urun1);
-            bst.put(urun2);
-            bst.put(urun3);
-            Console.WriteLine(bst.size());
-       
-            Console.WriteLine(bst.get("asdafsdasd").getUrunAdi());
-            Console.WriteLine(bst.get("sdafsdasd").getUrunAdi());
-            Console.WriteLine(bst.get("dafsdasd").getUrunAdi());
-
-            Console.WriteLine(bst.size(bst.get("dafsdasd")));
-
-            Urun urun4 = new Urun();
-            urun4.setSatisFiyatı(1001);
-
-            Urun urun5 = new Urun();
-            urun5.setSatisFiyatı(1002);
-
-            Urun urun6 = new Urun();
-            urun6.setSatisFiyatı(1003);
-
-            Heap hp = new Heap();
-            hp.insert(urun1);
-            hp.insert(urun2);
-            hp.insert(urun3);
-            hp.insert(urun4);
-            hp.insert(urun5);
-            hp.insert(urun6);
-            Console.WriteLine(hp.removeMin().getSatisFiyatı());
-            Console.WriteLine(hp.removeMin().getSatisFiyatı());
-            Console.WriteLine(hp.removeMin().getSatisFiyatı());
-            Console.WriteLine(hp.removeMin().getSatisFiyatı());
-            Console.WriteLine(hp.removeMin().getSatisFiyatı());
-            Console.WriteLine(hp.removeMin().getSatisFiyatı());
-
-
-            Dictionary<string, Urun> dt = new Dictionary<string,Urun>();
+            /*Dictionary<string, List<Urun>> dt = new Dictionary<string, List<Urun>>();
             dt.Add("pc", urun1);
             dt.Add("bot", urun2);
             dt.Add("tel", urun3);
 
+            Console.WriteLine(dt["pc"].getUrunAdi());*/
 
-            Console.WriteLine(dt["pc"].getUrunAdi());
-
-
-                Application.EnableVisualStyles();
+            //UrunTXTReader reader = new UrunTXTReader();
+            //reader.fromTxtToTree("C:\\Users\\Çağrı\\Desktop\\urunler.txt", bst, dt);
+            //Console.WriteLine(bst.get("Lenovo laptop").getUrunAdi());
+           // Console.WriteLine(dt["i5"][0].ToString());
+            //Console.WriteLine(dt["i5"][0].getUrunAdi());
+            //Console.WriteLine(dt["i5"][1].getUrunAdi());
+           // Console.WriteLine(bst.get("Lenovo laptop").getUrunAdi());
+            //foreach (string str in reader.reader("C:\\Users\\TOLGAHAN\\Desktop\\urunler.txt")[0])
+              //  Console.WriteLine(str);
+            //reader("C:\\Users\\TOLGAHAN\\Desktop\\urunler.txt")[0]
+            
+            Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Form1());
+            Application.Run(new Form2());    
         }
     }
 }

@@ -15,7 +15,7 @@ namespace DataProjec3CShaRp
         private int miktar;
         private int maliyet;
         private int satisFiyatı;
-        private ArrayList aciklama;
+        private List<string> aciklama;
         private Urun left, right;
         private int N;
 
@@ -99,13 +99,13 @@ namespace DataProjec3CShaRp
         {
             N = n;
         }
-        public ArrayList getAciklama()
+        public void setAciklama(List<string> lst)
+        {
+            this.aciklama = lst;
+        }
+        public List<string> getAciklama()
         {
             return aciklama;
-        }
-        public void setAciklama(ArrayList aciklama)
-        {
-            this.aciklama = aciklama;
         }
 
     }
